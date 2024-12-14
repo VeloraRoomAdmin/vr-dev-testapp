@@ -1,0 +1,24 @@
+
+
+version: 0.0
+Resources:
+  - TargetService:
+      Type: AWS::ECS::Service
+      Properties:
+        TaskDefinition: "arn:aws:ecs:us-east-1:266735832805:task-definition/ecs-demo:1"
+        LoadBalancerInfo:
+          ContainerName: "sample-website"
+          ContainerPort: 80
+# Optional properties
+        PlatformVersion: "LATEST"
+        NetworkConfiguration:
+            AwsvpcConfiguration:
+              Subnets: ["subnet-08ccfc9ac2cb54750", "subnet-0fd515072de803c1c", "	subnet-0ad075eefc7bc5986"]
+              SecurityGroups: ["sg-025cff3fa608c43be"]
+              AssignPublicIp: "ENABLED"
+Hooks:
+- BeforeInstall: "BeforeInstallHookFunctionName"
+- AfterInstall: "AfterInstallHookFunctionName"
+- AfterAllowTestTraffic: "AfterAllowTestTrafficHookFunctionName"
+- BeforeAllowTraffic: "BeforeAllowTrafficHookFunctionName"
+- AfterAllowTraffic: "AfterAllowTrafficHookFunctionName"
